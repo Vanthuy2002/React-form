@@ -1,21 +1,38 @@
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import InputHook from '../input/InputHook';
 
 const RegisterFormHook = () => {
+  const { formState, handleSubmit, control } = useForm();
+
+  const onSubmit = (values) => {
+    console.log(values);
+  };
+
   return (
-    <div className='w-full max-w-xs mx-auto my-10'>
+    <form
+      autoComplete='off'
+      onSubmit={handleSubmit(onSubmit)}
+      className='w-full max-w-xs mx-auto my-10'
+    >
       <div className='flex flex-col gap-3'>
         <label className='cursor-pointer' htmlFor='username'>
           Username
         </label>
-        <input
-          className='outline-none px-6 py-3 border-2 border-transparent focus:border-blue-500 rounded-md transition-all'
-          type='text'
+
+        <InputHook
+          control={control}
+          name='username'
           id='username'
-          placeholder='Enter username'
+          placeholder='Enter username...'
         />
-        <p className=''>Enter your username</p>
+        <p className='text-red-500 text-sm'>Enter your username</p>
       </div>
-    </div>
+
+      <button className='mt-5 w-full p-3 bg-blue-400 text-lg font-medium text-white rounded-lg'>
+        Submit
+      </button>
+    </form>
   );
 };
 
