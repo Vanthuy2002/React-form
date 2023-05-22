@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react';
 import { useController } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 const InputHook = ({ control, ...props }) => {
   const { field } = useController({
@@ -16,6 +17,11 @@ const InputHook = ({ control, ...props }) => {
       {...props}
     />
   );
+};
+
+InputHook.propTypes = {
+  control: PropTypes.object,
+  name: PropTypes.string.isRequired,
 };
 
 export default InputHook;

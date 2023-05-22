@@ -7,3 +7,21 @@
     background-color: #edf2fd;
   }
 }
+.custom-radio input:checked ~ div {
+  @apply bg-blue-500;
+}
+
+.custom-checkbox input:checked ~ div {
+  @apply bg-blue-500;
+}
+
+.custom-checkbox input:checked ~ div svg {
+  @apply text-white block;
+}
+
+.custom-radio .spinner {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #fff;
+}
