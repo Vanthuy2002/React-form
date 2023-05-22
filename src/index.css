@@ -5,7 +5,6 @@
 @layer base {
   body {
     background-color: #edf2fd;
-    font-weight: 500;
   }
 }
 .custom-radio input:checked ~ div {

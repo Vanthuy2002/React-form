@@ -3,9 +3,40 @@ import InputHook from '../input/InputHook';
 import RadioHook from '../radio/RadioHook';
 import CheckboxHook from '../checkbox/CheckboxHook';
 import SelectHook from '../select/SelectHook';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 const RegisterFormHook = () => {
-  const { formState, handleSubmit, control } = useForm();
+  const formatPass =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const formatUser = /^[A-Za-z0-9 ]+$/;
+  const schema = yup.object({
+    username: yup
+      .string()
+      .required('Field is required')
+      .matches(formatUser, { message: 'Can not contains special characters' }),
+    email: yup
+      .string()
+      .required('This field is required')
+      .email('This field must be email'),
+    password: yup
+      .string()
+      .required('Please set a password')
+      .matches(formatPass, {
+        message:
+          'One lowercase, one uppercase, one number, one special character',
+      }),
+    gender: yup
+      .string()
+      .required('Please set your gender')
+      .oneOf(['male', 'female'], 'Must be choose one of them'),
+    job: yup.string().required('Please choose one job'),
+    terms: yup.boolean().required('Please accept the terms and policy'),
+  });
+
+  const { formState, handleSubmit, control, setValue } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = (values) => {
     console.log(values);
@@ -28,8 +59,10 @@ const RegisterFormHook = () => {
           id='username'
           placeholder='Enter username...'
         />
-        {formState.errors.username && (
-          <p className='text-red-500 text-sm'>Enter your username</p>
+        {formState.errors?.username && (
+          <p className='text-red-500 text-sm'>
+            {formState.errors?.username.message}
+          </p>
         )}
       </div>
 
@@ -45,8 +78,10 @@ const RegisterFormHook = () => {
           placeholder='Enter email...'
           type='email'
         />
-        {formState.errors.email && (
-          <p className='text-red-500 text-sm'>Enter your email</p>
+        {formState.errors?.email && (
+          <p className='text-red-500 text-sm'>
+            {formState.errors?.email.message}
+          </p>
         )}
       </div>
 
@@ -62,8 +97,10 @@ const RegisterFormHook = () => {
           placeholder='Enter password...'
           type='password'
         />
-        {formState.errors.password && (
-          <p className='text-red-500 text-sm'>Enter your password</p>
+        {formState.errors?.password && (
+          <p className='text-red-500 text-sm'>
+            {formState.errors?.password.message}
+          </p>
         )}
       </div>
 
@@ -86,12 +123,24 @@ const RegisterFormHook = () => {
             <label htmlFor='female'>Female</label>
           </div>
         </div>
+
+        {formState.errors?.gender && (
+          <p className='text-red-500 text-sm'>
+            {formState.errors?.gender.message}
+          </p>
+        )}
       </div>
 
       {/* Are you is ??? */}
       <div className='flex flex-col gap-3 mt-5'>
         <label className='cursor-pointer'>Are You is ???</label>
-        <SelectHook />
+        <SelectHook control={control} setValue={setValue} name='job' />
+
+        {formState.errors?.job && (
+          <p className='text-red-500 text-sm'>
+            {formState.errors?.job.message}
+          </p>
+        )}
       </div>
 
       {/* terms */}
@@ -102,6 +151,12 @@ const RegisterFormHook = () => {
           id='terms'
           text='I accept the terms and conditions'
         />
+
+        {formState.errors?.terms && (
+          <p className='text-red-500 text-sm'>
+            {formState.errors?.terms.message}
+          </p>
+        )}
       </div>
 
       <button className='mt-5 w-full p-3 bg-blue-400 text-lg font-medium text-white rounded-lg'>
