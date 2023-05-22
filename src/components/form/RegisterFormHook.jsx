@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import InputHook from '../input/InputHook';
 import RadioHook from '../radio/RadioHook';
 import CheckboxHook from '../checkbox/CheckboxHook';
+import SelectHook from '../select/SelectHook';
 
 const RegisterFormHook = () => {
   const { formState, handleSubmit, control } = useForm();
@@ -16,11 +17,11 @@ const RegisterFormHook = () => {
       onSubmit={handleSubmit(onSubmit)}
       className='w-full max-w-xs mx-auto my-10'
     >
+      {/* username */}
       <div className='flex flex-col gap-3 mt-5'>
         <label className='cursor-pointer' htmlFor='username'>
           Username
         </label>
-
         <InputHook
           control={control}
           name='username'
@@ -32,11 +33,11 @@ const RegisterFormHook = () => {
         )}
       </div>
 
+      {/* email */}
       <div className='flex flex-col gap-3 mt-5'>
         <label className='cursor-pointer' htmlFor='email'>
           Email
         </label>
-
         <InputHook
           control={control}
           name='email'
@@ -49,11 +50,11 @@ const RegisterFormHook = () => {
         )}
       </div>
 
+      {/* password */}
       <div className='flex flex-col gap-3 mt-5'>
         <label className='cursor-pointer' htmlFor='password'>
           Password
         </label>
-
         <InputHook
           control={control}
           name='password'
@@ -66,21 +67,34 @@ const RegisterFormHook = () => {
         )}
       </div>
 
+      {/* gender */}
       <div className='flex flex-col gap-3 mt-5'>
-        <label className='cursor-pointer'>Gender</label>
+        <span>Gender</span>
         <div className='flex items-center gap-5'>
           <div className='flex items-center gap-x-3'>
-            <RadioHook name='gender' value='male' control={control} />
-            <span>Male</span>
+            <RadioHook name='gender' id='male' value='male' control={control} />
+            <label htmlFor='male'>Male</label>
           </div>
 
           <div className='flex items-center gap-x-3'>
-            <RadioHook name='gender' value='female' control={control} />
-            <span>Female</span>
+            <RadioHook
+              name='gender'
+              id='female'
+              value='female'
+              control={control}
+            />
+            <label htmlFor='female'>Female</label>
           </div>
         </div>
       </div>
 
+      {/* Are you is ??? */}
+      <div className='flex flex-col gap-3 mt-5'>
+        <label className='cursor-pointer'>Are You is ???</label>
+        <SelectHook />
+      </div>
+
+      {/* terms */}
       <div className='flex flex-col gap-3 mt-5'>
         <CheckboxHook
           control={control}
