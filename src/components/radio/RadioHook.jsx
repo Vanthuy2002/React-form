@@ -11,7 +11,13 @@ const RadioHook = ({ control, ...props }) => {
   });
   return (
     <label className='w-5 h-5 bg-white rounded-full grid place-items-center custom-radio'>
-      <input type='radio' {...field} {...props} hidden />
+      <input
+        type='radio'
+        {...field}
+        {...props}
+        checked={props.checked}
+        hidden
+      />
       <div className='spinner'></div>
     </label>
   );
@@ -21,6 +27,7 @@ RadioHook.propTypes = {
   control: PropTypes.object,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
+  checked: PropTypes.bool,
 };
 
 export default RadioHook;

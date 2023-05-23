@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useClickOut from '../../hooks/useClickOut';
 import { useWatch } from 'react-hook-form';
@@ -10,30 +10,32 @@ const jobData = [
   { id: 4, value: 'director', name: 'Director' },
 ];
 
-const SelectHook = ({ control, setValue, name }) => {
+const SelectHook = ({ control, setValue, name, title }) => {
   const { nodeRef, showPopover, setShowPopover } = useClickOut();
+
   const jobValue = useWatch({
     control,
     name: 'job',
-    defaultValue: 'Select Your Job',
+    defaultValue: '',
   });
 
-  const [label, setLabel] = useState(jobValue);
+  const [label, setLabel] = useState(title);
 
   const handleItem = (e) => {
     setValue(name, e.target.dataset.value);
-    setLabel(`I am a ${e.target.textContent}`);
+    setShowPopover(!showPopover);
+    setLabel(e.target.textContent);
   };
 
-  const handleClick = () => {
-    setShowPopover(!showPopover);
-  };
+  useEffect(() => {
+    if (jobValue === '') setLabel(title);
+  }, [jobValue, title]);
 
   return (
     <div className='relative' ref={nodeRef}>
       <div
         className='bg-white grid place-items-center p-2 rounded-md border-2 border-gray-100 cursor-pointer'
-        onClick={handleClick}
+        onClick={handleItem}
       >
         <span>{label}</span>
 
@@ -61,6 +63,7 @@ SelectHook.propTypes = {
   control: PropTypes.object,
   setValue: PropTypes.func,
   name: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default SelectHook;

@@ -34,12 +34,31 @@ const RegisterFormHook = () => {
     terms: yup.boolean().required('Please accept the terms and policy'),
   });
 
-  const { formState, handleSubmit, control, setValue } = useForm({
+  const { formState, handleSubmit, control, setValue, reset, watch } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      gender: 'male',
+    },
   });
 
+  const watchGender = watch('gender');
+
   const onSubmit = (values) => {
-    console.log(values);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+        console.log(values);
+
+        reset({
+          username: '',
+          email: '',
+          password: '',
+          gender: 'male',
+          job: '',
+          terms: false,
+        });
+      }, 3000);
+    });
   };
 
   return (
@@ -109,7 +128,13 @@ const RegisterFormHook = () => {
         <span>Gender</span>
         <div className='flex items-center gap-5'>
           <div className='flex items-center gap-x-3'>
-            <RadioHook name='gender' id='male' value='male' control={control} />
+            <RadioHook
+              name='gender'
+              id='male'
+              value='male'
+              checked={watchGender === 'male'}
+              control={control}
+            />
             <label htmlFor='male'>Male</label>
           </div>
 
@@ -118,6 +143,7 @@ const RegisterFormHook = () => {
               name='gender'
               id='female'
               value='female'
+              checked={watchGender === 'female'}
               control={control}
             />
             <label htmlFor='female'>Female</label>
@@ -134,7 +160,12 @@ const RegisterFormHook = () => {
       {/* Are you is ??? */}
       <div className='flex flex-col gap-3 mt-5'>
         <label className='cursor-pointer'>Are You is ???</label>
-        <SelectHook control={control} setValue={setValue} name='job' />
+        <SelectHook
+          control={control}
+          setValue={setValue}
+          name='job'
+          title='Select Your Job'
+        />
 
         {formState.errors?.job && (
           <p className='text-red-500 text-sm'>
@@ -159,8 +190,15 @@ const RegisterFormHook = () => {
         )}
       </div>
 
-      <button className='mt-5 w-full p-3 bg-blue-400 text-lg font-medium text-white rounded-lg'>
-        Submit
+      <button
+        className='mt-5 w-full p-3 bg-blue-400 text-lg font-medium text-white rounded-lg grid place-items-center disabled:opacity-50'
+        disabled={formState.isSubmitting}
+      >
+        {formState.isSubmitting ? (
+          <span className='inline-block w-6 h-6 rounded-full border-2 border-white border-t-transparent animate-spin'></span>
+        ) : (
+          <span>Submit</span>
+        )}
       </button>
     </form>
   );

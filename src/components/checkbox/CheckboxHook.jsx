@@ -8,9 +8,17 @@ const CheckboxHook = ({ control, text, ...props }) => {
     control,
     name: props.name,
   });
+
   return (
     <label className='custom-checkbox flex items-center gap-x-3'>
-      <input type='checkbox' {...field} {...props} hidden />
+      <input
+        type='checkbox'
+        {...field}
+        {...props}
+        defaultChecked={false}
+        checked={field.value}
+        hidden
+      />
       <div className='w-5 h-5 bg-white rounded-sm grid place-items-center'>
         <svg
           hidden
