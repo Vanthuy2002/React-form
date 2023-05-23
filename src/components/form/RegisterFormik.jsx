@@ -1,11 +1,7 @@
 import React from 'react';
 
 const RegisterFormik = () => {
-  return (
-    <div>
-      <h1>Formik</h1>
-    </div>
-  );
+  return <div></div>;
 };
 
 export default RegisterFormik;

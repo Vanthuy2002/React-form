@@ -1,10 +1,10 @@
 import './App.css';
-import RegisterFormHook from './components/form/RegisterFormHook';
+import RegisterFormik from './components/form/RegisterFormik';
 
 function App() {
   return (
     <>
-      <RegisterFormHook />
+      <RegisterFormik />
     </>
   );
 }
