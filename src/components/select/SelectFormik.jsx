@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useClickOut from '../../hooks/useClickOut';
 import { useField } from 'formik';
@@ -7,6 +7,10 @@ const SelectFormik = (props) => {
   const { nodeRef, showPopover, setShowPopover } = useClickOut();
   const [label, setLabel] = useState(props.title);
   const [field, meta] = useField(props.name);
+
+  useEffect(() => {
+    if (field.value === '') setLabel(props.title);
+  }, [field.value]);
 
   const jobData = [
     { id: 1, value: 'teacher', name: 'Teacher' },

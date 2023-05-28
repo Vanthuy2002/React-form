@@ -43,10 +43,11 @@ const RegisterFormik = () => {
           terms: yup.boolean().oneOf([true], 'Please check the terms'),
           job: yup.string().required('Please choose one job'),
         })}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           setTimeout(() => {
             console.log(values);
             setSubmitting(false);
+            resetForm();
           }, 1000);
         }}
       >
