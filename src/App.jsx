@@ -1,10 +1,13 @@
 import './App.css';
-import RegisterFormik from './components/form/RegisterFormik';
+import Tooltip from './Fragments/Challenge/Tooltip';
+import Exam from './Fragments/Example/Exam';
 
 function App() {
   return (
     <>
-      <RegisterFormik />
+      <Exam />
+
+      <Tooltip text='Hover Me'>This is Tooltip Chanllenge</Tooltip>
     </>
   );
 }
